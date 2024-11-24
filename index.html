@@ -18,7 +18,7 @@
             color: #333;
         }
         .button {
-            width: 100%; /* Largeur ajustée pour les boutons "Je suis une femme" et "Je suis un homme" */
+            width: 50%; /* Largeur ajustée pour les boutons "Je suis une femme" et "Je suis un homme" */
             padding: 15px;
             margin: 10px auto; /* Centre le bouton */
             border: none;
@@ -65,6 +65,14 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
             width: 250px;
+        }
+        .result-box {
+            background-color: #ffeb3b; /* Jaune */
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-weight: bold;
+            color: black; /* Texte en noir */
         }
         .logo {
             display: block;
@@ -113,7 +121,7 @@
 
     <div id="activity-input" class="input-container">
         <label for="activity">Niveau d'activité :</label>
-        <select id="activity" style="width: 100%; padding: 12px;">
+        <select id="activity">
             <option value="1.2">Sédentaire</option>
             <option value="1.375">Légèrement actif</option>
             <option value="1.55">Modérément actif</option>
@@ -167,31 +175,31 @@
                     <a href="https://payhip.com/b/elsIB" target="_blank">
                         <img src="imgprog1500.png" alt="Challenge 4 semaines" style="width: 100%; border-radius: 10px 10px 0 0;">
                     </a>
-                    <div>
-                        <p>Perte de poids estimée en 3 mois: <strong>${weightLoss1} kg</strong></p>
+                    <div class="result-box">
+                        Perte de poids estimée en 3 mois: <strong>${weightLoss1} kg</strong>
                     </div>
                 </div>
                 <div class="result-rectangle">
                     <a href="https://payhip.com/b/8EcnW" target="_blank">
                         <img src="imgprog1400.png" alt="Défi 14 jours" style="width: 100%; border-radius: 10px 10px 0 0;">
                     </a>
-                    <div>
-                        <p>Perte de poids estimée en 3 mois: <strong>${weightLoss2} kg</strong></p>
+                    <div class="result-box">
+                        Perte de poids estimée en 3 mois: <strong>${weightLoss2} kg</strong>
                     </div>
                 </div>
                 <div class="result-rectangle">
                     <a href="https://taplink.cc/kcoaching/d/37f9/" target="_blank">
                         <img src="imgprog1300.png" alt="Programme minceur express" style="width: 100%; border-radius: 10px 10px 0 0;">
                     </a>
-                    <div>
-                        <p>Perte de poids estimée en 3 mois: <strong>${weightLoss3} kg</strong></p>
+                    <div class="result-box">
+                        Perte de poids estimée en 3 mois: <strong>${weightLoss3} kg</strong>
                     </div>
                 </div>
             `;
 
             // Masquer les champs d'entrée
             document.querySelectorAll('.input-container').forEach(container => container.style.display = 'none');
-            // Afficher le bouton de retour
+                        // Afficher le bouton de retour
             document.getElementById('back-button').style.display = 'block';
         }
 
