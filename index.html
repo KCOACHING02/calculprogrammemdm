@@ -18,7 +18,7 @@
             color: #333;
         }
         .button {
-            width: 100%; /* Largeur ajustée pour contenir le texte sur une seule ligne */
+            width: 50%; /* Largeur ajustée pour les boutons "Je suis une femme" et "Je suis un homme" */
             padding: 15px;
             margin: 10px auto; /* Centre le bouton */
             border: none;
@@ -39,7 +39,8 @@
         .input-container {
             display: none; /* Masqué par défaut */
             margin-top: 20px;
-            width: 25%; /* Largeur des champs de saisie */
+            width: 50%; /* Largeur des champs de saisie */
+            padding: 0 10%; /* Ajoute un padding pour l'espacement */
         }
         input, select {
             width: 100%; /* Largeur des champs de saisie */
@@ -112,7 +113,7 @@
 
     <div id="activity-input" class="input-container">
         <label for="activity">Niveau d'activité :</label>
-        <select id="activity">
+        <select id="activity" style="width: 100%; padding: 12px;">
             <option value="1.2">Sédentaire</option>
             <option value="1.375">Légèrement actif</option>
             <option value="1.55">Modérément actif</option>
@@ -195,7 +196,7 @@
         }
 
         function goBack() {
-                        // Réinitialiser le formulaire
+            // Réinitialiser le formulaire
             document.getElementById('gender-selection').style.display = 'block';
             document.querySelectorAll('.input-container').forEach(container => container.style.display = 'none');
             document.getElementById('results').innerHTML = '';
