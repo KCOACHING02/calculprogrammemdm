@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trouve le programme qui te convient</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            margin-top: 10px;
+            display: block;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .results-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .result-rectangle {
+            /* Suppression de la couleur de fond noire */
+            color: white;
+            border-radius: 10px;
+            width: 250px;
+            padding: 15px;
+            margin: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .result-rectangle img {
+            width: 100%; /* Taille originale de l'image */
+            border-radius: 10px 10px 0 0; /* Coins arrondis en haut */
+        }
+        .result-box {
+            background-color: #ffeb3b; /* Fond jaune */
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-weight: bold;
+            color: black; /* Texte en noir */
+        }
+        #back-button {
+            width: 50%; /* Réduit la largeur du bouton de retour */
+            padding: 10px;
+            margin: 20px auto; /* Centrer le bouton */
+            display: none; /* Masqué par défaut */
+        }
+        .logo {
+            display: block;
+            margin: 0 auto 20px; /* Centrer le logo */
+            width: 150px; /* Ajustez la taille selon vos besoins */
+        }
+        @media (max-width: 600px) {
+            .result-rectangle {
+                width: 180px;
+            }
+            input, select, button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img src="logo.jpg" alt="Logo" class="logo"> <!-- Logo centré -->
+    <h1>Trouve le programme qui te convient</h1>
+    <div id="input-fields">
+        <label for="gender">Genre :</label>
+        <select id="gender">
+            <option value="male">Homme</option>
+            <option value="female">Femme</option>
+        </select>
+        <label for="weight">Poids (kg) :</label>
+        <input type="number" id="weight" required>
+        <label for="height">Taille (cm) :</label>
+        <input type="number" id="height" required>
+        <label for="age">Âge (ans) :</label>
+        <input type="number" id="age" required>
+        <label for="activity">Niveau d'activité :</label>
+        <select id="activity">
+            <option value="1.2">Sédentaire</option>
+            <option value="1.375">Légèrement actif</option>
+            <option value="1.55">Modérément actif</option>
+            <option value="1.725">Très actif</option>
+            <option value="1.9">Extrêmement actif</option>
+        </select>
+        <button onclick="calculate()">Calculer</button>
+    </div>
+    <div id="results" class="results-container"></div>
+    <button id="back-button" onclick="goBack()">Retour au formulaire</button>
+
+    <script>
+        function calculate() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const age = parseFloat(document.getElementById('age').value);
+            const gender = document.getElementById('gender').value;
+            const activity = parseFloat(document.getElementById('activity').value);
+
+            let BMR;
+            if (gender === 'male') {
+                BMR = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+            } else {
+                BMR = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+            }
+
+            const TDEE = BMR * activity;
+
+            const weightLoss1 = Math.round((TDEE - 1500) * 90 / 7700 * 10) / 10; // Challenge 4 semaines
+            const weightLoss2 = Math.round((TDEE - 1400) * 90 / 7700 * 10) / 10; // Défi 14 jours
+            const weightLoss3 = Math.round((TDEE - 1300) * 90 / 7700 * 10) / 10; // Programme minceur express
+
+            document.getElementById('results').innerHTML = `
+                <div class="result-rectangle">
+                    <a href="https://payhip.com/b/elsIB" target="_blank">
+                        <img src="imgprog1500.png" alt="Challenge 4 semaines">
+                    </a>
+                    <div class="result-box">
+                        <a href="https://payhip.com/b/elsIB" target="_blank">
+                            Perte de poids estimée en 3 mois: <strong>${weightLoss1} kg</strong>
+                        </a>
+                    </div>
+                </div>
+                <div class="result-rectangle">
+                    <a href="https://payhip.com/b/8EcnW" target="_blank">
+                        <img src="imgprog1400.png" alt="Défi 14 jours">
+                    </a>
+                    <div class="result-box">
+                        <a href="https://payhip.com/b/8EcnW" target="_blank">
+                            Perte de poids estimée en 3 mois: <strong>${weightLoss2} kg</strong>
+                        </a>
+                    </div>
+                </div>
+                <div class="result-rectangle">
+                    <a href="https://taplink.cc/kcoaching/d/37f9/" target="_blank">
+                        <img src="imgprog1300.png" alt="Programme minceur express">
+                    </a>
+                    <div class="result-box">
+                        <a href="https://taplink.cc/kcoaching/d/37f9/" target="_blank">
+                            Perte de poids estimée en 3 mois: <strong>${weightLoss3} kg</strong>
+                        </a>
+                    </div>
+                </div>
+            `;
+
+            // Masquer les champs d'entrée
+            document.getElementById('input-fields').style.display = 'none';
+            // Afficher le bouton de retour
+            document.getElementById('back-button').style.display = 'block';
+        }
+
+        function goBack() {
+            // Réinitialiser le formulaire
+            document.getElementById('input-fields').style.display = 'block';
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('back-button').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
