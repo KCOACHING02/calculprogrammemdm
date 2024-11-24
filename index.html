@@ -9,71 +9,61 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centre le contenu horizontalement */
         }
         h1 {
             text-align: center;
             color: #333;
         }
-        label {
-            margin-top: 10px;
-            display: block;
-            font-weight: bold;
-        }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
+        .button {
+            width: 100%; /* Largeur ajustée pour contenir le texte sur une seule ligne */
+            padding: 15px;
+            margin: 10px auto; /* Centre le bouton */
             border: none;
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
+            color: white;
+            background-color: #4CAF50; /* Vert */
+            display: block; /* Pour centrer le bouton */
         }
-        button:hover {
-            background-color: #45a049;
+        .female {
+            background-color: #d5006d; /* Rose plus foncé */
+        }
+        .male {
+            background-color: #1e90ff; /* Bleu */
+        }
+        .input-container {
+            display: none; /* Masqué par défaut */
+            margin-top: 20px;
+            width: 25%; /* Largeur des champs de saisie */
+        }
+        input, select {
+            width: 100%; /* Largeur des champs de saisie */
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
         }
         .results-container {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             flex-wrap: wrap;
             margin-top: 20px;
         }
         .result-rectangle {
-            /* Suppression de la couleur de fond noire */
-            color: white;
+            background-color: #fff;
             border-radius: 10px;
-            width: 250px;
             padding: 15px;
             margin: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
-        }
-        .result-rectangle img {
-            width: 100%; /* Taille originale de l'image */
-            border-radius: 10px 10px 0 0; /* Coins arrondis en haut */
-        }
-        .result-box {
-            background-color: #ffeb3b; /* Fond jaune */
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            font-weight: bold;
-            color: black; /* Texte en noir */
-        }
-        #back-button {
-            width: 50%; /* Réduit la largeur du bouton de retour */
-            padding: 10px;
-            margin: 20px auto; /* Centrer le bouton */
-            display: none; /* Masqué par défaut */
+            width: 250px;
         }
         .logo {
             display: block;
@@ -82,9 +72,12 @@
         }
         @media (max-width: 600px) {
             .result-rectangle {
-                width: 180px;
+                width: 90%;
             }
-            input, select, button {
+            .button {
+                font-size: 14px;
+            }
+            input, select {
                 font-size: 14px;
             }
         }
@@ -93,18 +86,31 @@
 <body>
     <img src="LOGOMDM.PNG" alt="Logo" class="logo"> <!-- Logo centré -->
     <h1>Trouve le programme qui te convient</h1>
-    <div id="input-fields">
-        <label for="gender">Genre :</label>
-        <select id="gender">
-            <option value="male">Homme</option>
-            <option value="female">Femme</option>
-        </select>
-        <label for="weight">Poids (kg) :</label>
-        <input type="number" id="weight" required>
-        <label for="height">Taille (cm) :</label>
-        <input type="number" id="height" required>
+    
+    <div id="gender-selection">
+        <button class="button female" onclick="selectGender('female')">Je suis une femme</button>
+        <button class="button male" onclick="selectGender('male')">Je suis un homme</button>
+    </div>
+
+    <div id="age-input" class="input-container">
         <label for="age">Âge (ans) :</label>
         <input type="number" id="age" required>
+        <button class="button" id="next-age" onclick="nextStep('weight-input')">Suivant</button>
+    </div>
+
+    <div id="weight-input" class="input-container">
+        <label for="weight">Poids (kg) :</label>
+        <input type="number" id="weight" required>
+        <button class="button" id="next-weight" onclick="nextStep('height-input')">Suivant</button>
+    </div>
+
+    <div id="height-input" class="input-container">
+        <label for="height">Taille (cm) :</label>
+        <input type="number" id="height" required>
+        <button class="button" id="next-height" onclick="nextStep('activity-input')">Suivant</button>
+    </div>
+
+    <div id="activity-input" class="input-container">
         <label for="activity">Niveau d'activité :</label>
         <select id="activity">
             <option value="1.2">Sédentaire</option>
@@ -113,17 +119,33 @@
             <option value="1.725">Très actif</option>
             <option value="1.9">Extrêmement actif</option>
         </select>
-        <button onclick="calculate()">Calculer</button>
+        <button class="button" id="next-activity" onclick="calculate()">Suivant</button>
     </div>
+
     <div id="results" class="results-container"></div>
-    <button id="back-button" onclick="goBack()">Retour au formulaire</button>
+    <button id="back-button" class="button" onclick="goBack()" style="display: none;">Retour au formulaire</button>
 
     <script>
+        let gender;
+
+        function selectGender(selectedGender) {
+            gender = selectedGender;
+            document.getElementById('gender-selection').style.display = 'none';
+            document.getElementById('age-input').style.display = 'block';
+        }
+
+        function nextStep(nextId) {
+            const currentInput = document.querySelector('.input-container:not([style*="display: none"])');
+            if (currentInput) {
+                currentInput.style.display = 'none';
+            }
+            document.getElementById(nextId).style.display = 'block';
+        }
+
         function calculate() {
             const weight = parseFloat(document.getElementById('weight').value);
             const height = parseFloat(document.getElementById('height').value);
             const age = parseFloat(document.getElementById('age').value);
-            const gender = document.getElementById('gender').value;
             const activity = parseFloat(document.getElementById('activity').value);
 
             let BMR;
@@ -142,45 +164,40 @@
             document.getElementById('results').innerHTML = `
                 <div class="result-rectangle">
                     <a href="https://payhip.com/b/elsIB" target="_blank">
-                        <img src="imgprog1500.png" alt="Challenge 4 semaines">
+                        <img src="imgprog1500.png" alt="Challenge 4 semaines" style="width: 100%; border-radius: 10px 10px 0 0;">
                     </a>
-                    <div class="result-box">
-                        <a href="https://payhip.com/b/elsIB" target="_blank">
-                            Perte de poids estimée en 3 mois: <strong>${weightLoss1} kg</strong>
-                        </a>
+                    <div>
+                        <p>Perte de poids estimée en 3 mois: <strong>${weightLoss1} kg</strong></p>
                     </div>
                 </div>
                 <div class="result-rectangle">
                     <a href="https://payhip.com/b/8EcnW" target="_blank">
-                        <img src="imgprog1400.png" alt="Défi 14 jours">
+                        <img src="imgprog1400.png" alt="Défi 14 jours" style="width: 100%; border-radius: 10px 10px 0 0;">
                     </a>
-                    <div class="result-box">
-                        <a href="https://payhip.com/b/8EcnW" target="_blank">
-                            Perte de poids estimée en 3 mois: <strong>${weightLoss2} kg</strong>
-                        </a>
+                    <div>
+                        <p>Perte de poids estimée en 3 mois: <strong>${weightLoss2} kg</strong></p>
                     </div>
                 </div>
                 <div class="result-rectangle">
                     <a href="https://taplink.cc/kcoaching/d/37f9/" target="_blank">
-                        <img src="imgprog1300.png" alt="Programme minceur express">
+                        <img src="imgprog1300.png" alt="Programme minceur express" style="width: 100%; border-radius: 10px 10px 0 0;">
                     </a>
-                    <div class="result-box">
-                        <a href="https://taplink.cc/kcoaching/d/37f9/" target="_blank">
-                            Perte de poids estimée en 3 mois: <strong>${weightLoss3} kg</strong>
-                        </a>
+                    <div>
+                        <p>Perte de poids estimée en 3 mois: <strong>${weightLoss3} kg</strong></p>
                     </div>
                 </div>
             `;
 
             // Masquer les champs d'entrée
-            document.getElementById('input-fields').style.display = 'none';
+            document.querySelectorAll('.input-container').forEach(container => container.style.display = 'none');
             // Afficher le bouton de retour
             document.getElementById('back-button').style.display = 'block';
         }
 
         function goBack() {
-            // Réinitialiser le formulaire
-            document.getElementById('input-fields').style.display = 'block';
+                        // Réinitialiser le formulaire
+            document.getElementById('gender-selection').style.display = 'block';
+            document.querySelectorAll('.input-container').forEach(container => container.style.display = 'none');
             document.getElementById('results').innerHTML = '';
             document.getElementById('back-button').style.display = 'none';
         }
