@@ -170,7 +170,18 @@
             const weightLoss2 = Math.round((TDEE - 1400) * 90 / 7700 * 10) / 10; // Défi 14 jours
             const weightLoss3 = Math.round((TDEE - 1300) * 90 / 7700 * 10) / 10; // Programme minceur express
 
+            // Calcul pour le nouveau programme Challenge 49 jours
+            const weightLoss49days = Math.round((((TDEE - 1300) * 7 + (TDEE - 1400) * 14 + (TDEE - 1500) * 28) / 49) * 90 / 7700 * 10) / 10;
+
             document.getElementById('results').innerHTML = `
+                <div class="result-rectangle">
+                    <a href="https://taplink.cc/kcoaching/d/nouveauprogramme/" target="_blank">
+                        <img src="Challenge49jours.png" alt="Challenge 49 jours" style="width: 100%; border-radius: 10px 10px 0 0;">
+                    </a>
+                    <div class="result-box">
+                        Perte de poids estimée en 3 mois: <strong>${weightLoss49days} kg</strong>
+                    </div>
+                </div>
                 <div class="result-rectangle">
                     <a href="https://payhip.com/b/elsIB" target="_blank">
                         <img src="imgprog1500.png" alt="Challenge 4 semaines" style="width: 100%; border-radius: 10px 10px 0 0;">
@@ -183,7 +194,7 @@
                     <a href="https://payhip.com/b/8EcnW" target="_blank">
                         <img src="imgprog1400.png" alt="Défi 14 jours" style="width: 100%; border-radius: 10px 10px 0 0;">
                     </a>
-                    <div class="result-box">
+                                            <div class="result-box">
                         Perte de poids estimée en 3 mois: <strong>${weightLoss2} kg</strong>
                     </div>
                 </div>
@@ -199,7 +210,7 @@
 
             // Masquer les champs d'entrée
             document.querySelectorAll('.input-container').forEach(container => container.style.display = 'none');
-                        // Afficher le bouton de retour
+            // Afficher le bouton de retour
             document.getElementById('back-button').style.display = 'block';
         }
 
@@ -213,3 +224,4 @@
     </script>
 </body>
 </html>
+
